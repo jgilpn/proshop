@@ -5,6 +5,7 @@ import connectDB from './config/db.js'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 
 import productRoutes from './routes/productRoutes.js'
+import userRoutes from './routes/userRoutes.js'
 
 // Uses the .env file
 dotenv.config()
@@ -15,12 +16,15 @@ connectDB()
 // Create Express App
 const app = express()
 
+app.use(express.json())
+
 // Routes
 app.get('/', (req, res) => {
   res.send('API is running')
 })
 
 app.use('/api/v1/products', productRoutes)
+app.use('/api/v1/users', userRoutes)
 
 // Error Middleware
 app.use(notFound)
