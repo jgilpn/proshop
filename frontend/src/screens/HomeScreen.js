@@ -9,9 +9,11 @@ import { listProducts } from '../actions/productActions'
 const HomeScreen = () => {
   const dispatch = useDispatch()
 
+  // Product List (from global state)
   const productList = useSelector((state) => state.productList)
   const { loading, error, products } = productList
 
+  // Dispatch the listProducts action
   useEffect(() => {
     dispatch(listProducts())
   }, [dispatch])
