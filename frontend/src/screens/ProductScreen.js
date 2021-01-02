@@ -103,6 +103,7 @@ const ProductScreen = ({ history, match }) => {
                     block
                     disabled={product.countInStock === 0}
                     onClick={addToCartHandler}
+                    style={{ borderRadius: 0 }}
                   >
                     Add To Cart
                   </Button>
