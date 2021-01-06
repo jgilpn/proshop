@@ -27,6 +27,7 @@ import {
   USER_UPDATE_SUCCESS,
 } from '../constants/userConstants'
 import {
+  ORDER_DELIVER_RESET,
   ORDER_MY_LIST_RESET,
   ORDER_PAY_RESET,
 } from '../constants/orderConstants'
@@ -68,12 +69,14 @@ export const login = (email, password) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo')
+  localStorage.removeItem('shippingAddress')
   dispatch({ type: USER_LOGOUT })
   dispatch({ type: USER_DETAILS_RESET })
   dispatch({ type: ORDER_MY_LIST_RESET })
   dispatch({ type: USER_LIST_RESET })
   dispatch({ type: USER_UPDATE_RESET })
   dispatch({ type: ORDER_PAY_RESET })
+  dispatch({ type: ORDER_DELIVER_RESET })
 }
 
 export const register = (name, email, password) => async (dispatch) => {

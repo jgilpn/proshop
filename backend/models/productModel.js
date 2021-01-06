@@ -15,6 +15,12 @@ const reviewSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    user: {
+      // Creates a relationship between the Product and the User
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
+    },
   },
   { timestamps: true }
 )

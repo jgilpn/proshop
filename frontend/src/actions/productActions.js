@@ -15,6 +15,9 @@ import {
   PRODUCT_UPDATE_REQUEST,
   PRODUCT_UPDATE_SUCCESS,
   PRODUCT_UPDATE_FAIL,
+  PRODUCT_REVIEW_CREATE_REQUEST,
+  PRODUCT_REVIEW_CREATE_SUCCESS,
+  PRODUCT_REVIEW_CREATE_FAIL,
 } from '../constants/productConstants'
 
 // Fetches the List of Products from the Backend
@@ -150,6 +153,42 @@ export const updateProduct = (product) => async (dispatch, getState) => {
   } catch (err) {
     dispatch({
       type: PRODUCT_UPDATE_FAIL,
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.message,
+    })
+  }
+}
+
+export const createProductReview = (productId, review) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({
+      type: PRODUCT_REVIEW_CREATE_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    await axios.post(`/api/v1/products/${productId}/reviews`, review, config)
+
+    dispatch({
+      type: PRODUCT_REVIEW_CREATE_SUCCESS,
+    })
+  } catch (err) {
+    dispatch({
+      type: PRODUCT_REVIEW_CREATE_FAIL,
       payload:
         err.response && err.response.data.message
           ? err.response.data.message
