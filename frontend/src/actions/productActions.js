@@ -22,11 +22,15 @@ import {
 
 // Fetches the List of Products from the Backend
 // Dispatches the payload
-export const listProducts = (keyword = '') => async (dispatch) => {
+export const listProducts = (keyword = '', pageNumber = '') => async (
+  dispatch
+) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST })
 
-    const { data } = await axios.get(`/api/v1/products?keyword=${keyword}`)
+    const { data } = await axios.get(
+      `/api/v1/products?keyword=${keyword}&pageNumber=${pageNumber}`
+    )
 
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data })
   } catch (err) {
