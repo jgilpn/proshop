@@ -1,3 +1,30 @@
+/* carousel */
+.carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+  display: flex;
+  justify-content: center;
+}
+.carousel-caption {
+  position: absolute;
+  top: 0;
+}
+.carousel-caption h2 {
+  color: #fff;
+}
+.carousel img {
+  display: flex;
+  height: 300px;
+  padding: 15%;
+  margin: 5% 0 0 0;
+  border-radius: 50%;
+}
+.carousel a {
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+}
+
 main {
   min-height: 80vh;
 }
