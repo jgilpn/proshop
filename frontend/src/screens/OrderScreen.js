@@ -14,6 +14,7 @@ import {
 import {
   ORDER_PAY_RESET,
   ORDER_DETAILS_RESET,
+  ORDER_DELIVER_RESET,
 } from '../constants/orderConstants'
 
 const OrderScreen = ({ match, history }) => {
@@ -53,6 +54,7 @@ const OrderScreen = ({ match, history }) => {
       if (!order || order._id !== orderId || successPay || successDeliver) {
         dispatch({ type: ORDER_DETAILS_RESET })
         dispatch({ type: ORDER_PAY_RESET })
+        dispatch({ type: ORDER_DELIVER_RESET })
         dispatch(getOrderDetails(orderId))
       } else if (!order.isPaid) {
         if (!window.paypal) {
