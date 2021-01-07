@@ -9,6 +9,13 @@ import { createOrder } from '../actions/orderActions'
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch()
 
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
+  if (!userInfo) {
+    history.push('/login')
+  }
+
   const cart = useSelector((state) => state.cart)
 
   // CALCULATE PRICES
@@ -32,11 +39,13 @@ const PlaceOrderScreen = ({ history }) => {
   const { order, success, error } = orderCreate
 
   useEffect(() => {
-    if (success) {
+    if (!userInfo) {
+      history.push('/login')
+    } else if (success) {
       history.push(`/order/${order._id}`)
     }
     // eslint-disable-next-line
-  }, [history, success])
+  }, [history, success, userInfo])
 
   const placeOrderHandler = () => {
     dispatch(
@@ -55,6 +64,7 @@ const PlaceOrderScreen = ({ history }) => {
   return (
     <>
       <CheckoutSteps step1 step2 step3 step4 />
+
       <Row>
         <Col md={8}>
           <ListGroup variant='flush'>

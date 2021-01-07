@@ -39,11 +39,10 @@ const ProductListScreen = ({ history, match }) => {
   const { userInfo } = userLogin
 
   useEffect(() => {
-    dispatch({ type: PRODUCT_CREATE_RESET })
-
-    if (!userInfo.isAdmin) {
+    if (!userInfo || !userInfo.isAdmin) {
       history.push('/login')
     }
+    dispatch({ type: PRODUCT_CREATE_RESET })
 
     if (successCreate) {
       history.push(`/admin/product/${createdProduct._id}/edit`)

@@ -13,15 +13,14 @@ import {
 } from '../actions/orderActions'
 import {
   ORDER_PAY_RESET,
-  ORDER_DELIVER_RESET,
+  ORDER_DETAILS_RESET,
 } from '../constants/orderConstants'
 
 const OrderScreen = ({ match, history }) => {
-  const dispatch = useDispatch()
-
   const orderId = match.params.id
-
   const [sdkReady, setSdkReady] = useState(false)
+
+  const dispatch = useDispatch()
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
@@ -52,8 +51,8 @@ const OrderScreen = ({ match, history }) => {
       }
 
       if (!order || order._id !== orderId || successPay || successDeliver) {
+        dispatch({ type: ORDER_DETAILS_RESET })
         dispatch({ type: ORDER_PAY_RESET })
-        dispatch({ type: ORDER_DELIVER_RESET })
         dispatch(getOrderDetails(orderId))
       } else if (!order.isPaid) {
         if (!window.paypal) {
@@ -63,7 +62,7 @@ const OrderScreen = ({ match, history }) => {
         }
       }
     }
-  }, [dispatch, order, orderId, successPay, successDeliver, userInfo, history])
+  }, [dispatch, userInfo, order, orderId, successPay, successDeliver, history])
 
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(orderId, paymentResult))
@@ -77,7 +76,7 @@ const OrderScreen = ({ match, history }) => {
     <Loader />
   ) : error ? (
     <Message variant='danger'>{error}</Message>
-  ) : !userInfo ? (
+  ) : !userInfo || !order ? (
     window.location.reload()
   ) : (
     <>
