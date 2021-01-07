@@ -76,7 +76,7 @@ const OrderScreen = ({ match, history }) => {
     <Loader />
   ) : error ? (
     <Message variant='danger'>{error}</Message>
-  ) : !userInfo || !order ? (
+  ) : !userInfo ? (
     window.location.reload()
   ) : (
     <>
